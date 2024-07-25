@@ -25,7 +25,7 @@
 
     <!-- Selección de tipo de grupo funcional -->
     <label for="tipo-grupo">Tipo de Grupo:</label>
-    <select id="tipo-grupo">
+    <select id="tipo-grupo" onchange="actualizarGrupos()">
         <option value="">Selecciona un tipo de grupo</option>
         <option value="Incremente sin anillo">Incremente sin anillo</option>
         <option value="Incremento con anillo">Incremento con anillo</option>
@@ -73,7 +73,7 @@
             'Incremento con anillo': ['-CH2-', '>CH-', '>C<', '=CH-', '-C<'],
             'Incremento de Halógenos': ['-F', '-CL', '-BR', '-I'],
             'Incremento oxígeno': ['-OH(alcohol)', '-OH(phenol)', '-O-(nonring)', '-O-(ring)', '>C=O(nonring)', '>C=O(ring)', 'O=CH-(aldehyde)', '-COOH(acid)', '-COO-(ester)', '=O(except as above)'],
-            'Incrementos nitrógenos': ['-NH2', '>NH(nonring)', '>NH(ring)', '>N-(aldehyde)', '-N=(acid)', '-N=(ester)', '=NH', '-CN', '-NO2'],
+            'Incrementos nitrógenos': ['-NH2', '>NH(nonring)', '>NH(ring)', '>N-(nonring)', '-N=(nonring)', '-N=(ring)', '=NH', '-CN', '-NO2'],
             'Sulfuro incrementos': ['-SH', '-S-(nonring)', '-S-(ring)']
         };
 
@@ -154,7 +154,7 @@
                         const cpPromedio = data.cp_promedio;
                         const formula = data.formula;
                         if (cpPromedio !== undefined) {
-                            document.getElementById('resultado').innerHTML = `<p>${formula}</p><p>El Cp promedio entre ${tempMin} K y ${tempMax} K es ${cpPromedio.toFixed(2)} J/(mol*K)</p>`;
+                            document.getElementById('resultado').innerHTML = `<p>${formula}</p><p>El Entalpia ${tempMin} K y ${tempMax} K es ${cpPromedio.toFixed(2)} J/mol</p>`;
                         } else {
                             document.getElementById('resultado').innerHTML = `<p>Error: No se pudo calcular Cp.</p>`;
                         }
@@ -165,6 +165,9 @@
                     document.getElementById('resultado').innerHTML = `<p>Error en la solicitud: ${error.message}</p>`;
                 });
         }
+
+        // Agregar el evento onchange al select de tipo-grupo
+        document.getElementById('tipo-grupo').addEventListener('change', actualizarGrupos);
     </script>
 </body>
 
